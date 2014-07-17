@@ -18,34 +18,6 @@ class puppet-bootstrap {
         fail( "SELinux is enforcing" )
     }
 
-    file { "/etc/yum.repos.d/puppet.repo":
-        ensure  => file,
-        replace => false,
-        source  => "puppet:///modules/puppet-bootstrap/puppet.repo",
-        notify  => Exec["yum clean all"],
-    }
-
-    $epel_release = $lsbmajdistrelease ? {
-        5 => 4,
-        6 => 5,
-    }
-
-    package { "epel-release":
-        ensure   => present,
-        provider => rpm,
-        source   => "http://download.fedoraproject.org/pub/epel/${lsbmajdistrelease}/${architecture}/epel-release-${lsbmajdistrelease}-${epel_release}.noarch.rpm",
-        require  => undef,
-        notify   => Exec["yum clean all"],
-    }
-
-    package { "passenger-release":
-        ensure   => present,
-        provider => rpm,
-        source   => "http://passenger.stealthymonkeys.com/rhel/${lsbmajdistrelease}/passenger-release.noarch.rpm",
-        require  => undef,
-        notify   => Exec["yum clean all"],
-    }
-
     exec { "yum clean all":
         command     => "yum clean all",
         refreshonly => true,

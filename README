@@ -2,5 +2,10 @@ Standalone Puppet manifest to bootstrap a passenger-based puppetmaster on RHEL
 and equivalents. Currently assumes puppetmaster has never been installed and
 the puppetmaster is to be referred to as puppet.$domain.
 
+Given that EPEL is a requirement to yum install puppet, deal with that outside
+bootstrap script. For el6:
+# wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+# rpm -Uvh epel-release-6-8.noarch.rpm
+
 $ git clone git://github.com/bodgit/puppet-bootstrap.git
 $ puppet --modulepath . -e 'include puppet-bootstrap'
